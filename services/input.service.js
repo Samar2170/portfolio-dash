@@ -8,7 +8,8 @@ export const inputService = {
     registerNcdTrade,
     registerUnlistedNcdTrade,
     registerFd,
-    registerMfTrade
+    registerMfTrade,
+    createBulkUpload
 }
 
 function createStockTrade(formData) {
@@ -33,4 +34,7 @@ function registerUnlistedNcdTrade(formData) {
 }
 function registerFd(formData) {
     return fetchWrapper.postForm(`${baseUrl}register-fd`,formData)
+}
+function createBulkUpload(formData, security) {
+    return fetchWrapper.postForm(`${baseUrl}bulk-upload/${security}`,formData)
 }

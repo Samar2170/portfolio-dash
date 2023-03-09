@@ -3,22 +3,25 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { inputService } from "../../services/input.service";
 import { dataFetchService } from "../../services/dataFetch.service";
-// type FD struct {
-// 	Bank        string `json:"bank" form:"bank"`
-// 	Amount      string `json:"amount" form:"amount"`
-// 	MtAmount    string `json:"maturity_amount" form:"maturity_amount"`
-// 	IpRate      string `json:"ip_rate" form:"ip_rate"`
-// 	IpFrequency string `json:"ip_frequency" form:"ip_frequency"`
-// 	IpDate      string `json:"ip_date" form:"ip_date"`
-// 	StartDate   string `json:"start_date" form:"start_date"`
-// 	MtDate      string `json:"maturity_date" form:"maturity_date"`
-// 	AccNumber   string `json:"account_number" form:"account_number"`
-// }
+
+class IpFrequency {
+    constructor(name,def) {
+        this.name=name
+        this.def=def
+    }
+}
+
+const ipFrequency = [
+    new IpFrequency("A", "Annual"),
+	new IpFrequency("M",  "Monthly"),
+	new IpFrequency("MT", "Maturity"),
+	new IpFrequency("Q","Quarterly"),
+	new IpFrequency("SA", "Semi annually"),
+]
 
 export default function CreateStockTrade() {
     const router = useRouter();
     const [query,setQuery] = useState({
-        bank:'',
         amount:'',
         maturity_amount:0,
         ip_rate:0,
@@ -80,7 +83,7 @@ export default function CreateStockTrade() {
                     
                     <div className="col-span-3 sm:col-span-3">
                         <label htmlFor="demat" className="block text-sm font-medium text-gray-700">
-                            Demat Account
+                            Bank Account
                             </label>
                             <select id="demat" name="demat" value={query.demat} onChange={handleChange}
                             className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
@@ -96,46 +99,68 @@ export default function CreateStockTrade() {
                             }
                     </div>
                     <div className="col-span-3 sm:col-span-3">
-                        <label htmlFor="quantity" className="block text-sm font-medium text-gray-700">
-                            Quantity
+                        <label htmlFor="amount" className="block text-sm font-medium text-gray-700">
+                            Amount 
                             </label>
-                            <input type="number" name="quantity" id="quantity" value={query.quantity} onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
-                            {submitted && !quantity &&
+                            <input type="number" name="amount" id="amount" value={query.amount} onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                            {submitted && !amount &&
                                 <div className="text-red-500">Quantity is required</div>
                             }
                     </div>
                     <div className="col-span-3 sm:col-span-3">
-                        <label htmlFor="price" className="block text-sm font-medium text-gray-700">
-                            Price
+                        <label htmlFor="maturity_amount" className="block text-sm font-medium text-gray-700">
+                        Maturity Amount
                             </label>
-                            <input type="number" name="price" id="price" value={query.price} onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
-                            {submitted && !price &&
-                                <div className="text-red-500">Price is required</div>
+                            <input type="number" name="maturity_amount" id="maturity_amount" value={query.maturity_amount} onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                            {submitted && !maturity_amount &&
+                                <div className="text-red-500">Maturity Amount is required</div>
                             }
                     </div>
 
                     <div className="col-span-3 sm:col-span-3">
-                        <label htmlFor="tradeDate" className="block text-sm font-medium text-gray-700">
-                            Trade Date
+                        <label htmlFor="start_date" className="block text-sm font-medium text-gray-700">
+                            Start Date
                             </label>
-                            <input type="date" name="tradeDate" id="tradeDate" value={query.tradeDate} onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                            <input type="date" name="start_date" id="start_date" value={query.start_date} onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
                     </div>
-                </div>    
-                <div className="col-span-3 sm:col-span-3">
-                        <label htmlFor="tradeType" className="block text-sm font-medium text-gray-700">
-                            Trade Type
+                    <div className="col-span-3 sm:col-span-3">
+                        <label htmlFor="maturity_date" className="block text-sm font-medium text-gray-700">
+                        Maturity Date 
                             </label>
-                            <select id="tradeType" name="tradeType" value={query.tradeType} onChange={handleChange}
-                            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">                                    <option value="">Select Vendor</option>
-                                <option key="BUY" value="BUY">BUY</option>
-                                <option key="SELL" value="SELL">SELL</option>
+                            <input type="date" name="maturity_date" id="maturity_date" value={query.maturity_date} onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                    </div>
+                    <div className="col-span-3 sm:col-span-3">
+                        <label htmlFor="ip_date" className="block text-sm font-medium text-gray-700">
+                        IP Date 
+                            </label>
+                            <input type="date" name="ip_date" id="ip_date" value={query.ip_date} onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                    </div>
+                    <div className="col-span-3 sm:col-span-3">
+                        <label htmlFor="ip_rate" className="block text-sm font-medium text-gray-700">
+                        IP Rate 
+                            </label>
+                            <input type="number" name="amount" id="amount" value={query.amount} onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />                 
+                    </div>
+                    <div className="col-span-3 sm:col-span-3">
+                        <label htmlFor="ip_frequency" className="block text-sm font-medium text-gray-700">
+                            IP Frequency
+                            </label>
+                            <select id="ip_frequency" name="ip_frequency" value={query.ip_frequency} onChange={handleChange}
+                            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                <option value="">Select IP Frequency</option>
+                                {ipFrequency.map((ipf) => {
+                                    return (
+                                        <option key={ipf.name} value={ipf.name}>{ipf.name} {ipf.def}</option>
+                                    )
+                                })}
                             </select>
-                            {submitted && !tradeType &&
-                                <div className="text-red-500">Trade Type is required</div>
+                            {submitted && !ip_frequency &&
+                                <div className="text-red-500">Bank Account is required</div>
                             }
-
                     </div>
 
+                </div>    
+                
             </div>
             <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
                 <button

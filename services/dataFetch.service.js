@@ -8,6 +8,7 @@ export const dataFetchService = {
     searchMutualFunds,
     getNCDSymbols,
     getUNCDSymbols,
+    getTemplateFile,
 }
 
 function getStockSymbols() {
@@ -25,4 +26,7 @@ function getNCDSymbols() {
 }
 function getUNCDSymbols() {
     return fetchWrapper.get(`${baseUrl}securities/unlisted-ncd-list`)
+}
+function getTemplateFile(security) {
+    return fetchWrapper.get(`${baseUrl}bulk-upload-template/${security}`)
 }

@@ -50,6 +50,7 @@ function postForm(url , formData) {
 
 function authHeader(url) {
     const user = userService.userValue;
+    console.log("authheader",user)
     let isLoggedIn = false;
     if (user) {
         isLoggedIn = true;
@@ -68,6 +69,7 @@ function handleResponse(response) {
         if (!response.ok) {
             if ([401,403].includes(response.status) && userService.userValue) {
                 alert('Session expired. Please login again');
+                localStorage.clear("user");
                 location.reload(true);
             }
             else if (response.status === 400) {
