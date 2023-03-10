@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { userService } from "../services/user.service"; 
-import Navbar  from "../components/navbar";
+import Navbar  from "../components/navbar2";
 export default App;
 import { Alert } from "../components/Alerts";
 import styles from "../styles/globals.css";
