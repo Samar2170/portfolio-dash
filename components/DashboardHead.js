@@ -14,8 +14,10 @@ export default function DashboardHead(props) {
         response.then((res) => {
             let newData = []
             Object.keys(res.Data).forEach(function(key,val){
-                var randomColor = Math.floor(Math.random()*16777215).toString(16);
-                newData.push({title:key,value:res.Data[key],color:'#'+randomColor})
+                if (key.toLowerCase()!='total') {
+                    var randomColor = Math.floor(Math.random()*16777215).toString(16);
+                    newData.push({title:key,value:res.Data[key],color:'#'+randomColor})    
+                }
             })
             console.log(newData);
           setData(newData)
