@@ -9,6 +9,8 @@ export const dataFetchService = {
     getNCDSymbols,
     getUNCDSymbols,
     getTemplateFile,
+    getHoldings,
+    getHoldingAggregates
 }
 
 function getStockSymbols() {
@@ -29,4 +31,11 @@ function getUNCDSymbols() {
 }
 function getTemplateFile(security) {
     return fetchWrapper.get(`${baseUrl}bulk-upload-template/${security}`)
+}
+
+function getHoldings(queryString) {
+    return fetchWrapper.get(`${baseUrl}portfolio/get-holdings?${queryString}`)
+}
+function getHoldingAggregates() {
+    return fetchWrapper.get(`${baseUrl}portfolio/get-holdings-aggregates`)
 }

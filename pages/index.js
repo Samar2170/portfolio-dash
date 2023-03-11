@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <div className="container">
       {/* {loading ? <Loader /> : <DashboardHead props={data}/>} */}
-    {/* <DashboardHead/> */}
+    <DashboardHead/>
     {/* <VendorTable/> */}
     </div>
   )
