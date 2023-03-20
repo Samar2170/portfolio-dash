@@ -8,9 +8,12 @@ import FormLayout from "../components/form";
 
 export default function Login() {
     const router = useRouter();
+    const goHome =() => {
+        router.push('/');
+    }
     useEffect(() => {
         if (userService.userValue) {
-            router.push('/');
+            goHome();            
         }
     },[]);
     const validationSchema = yup.object().shape({

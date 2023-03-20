@@ -71,7 +71,7 @@ export default function ViewPaymentRequests(props) {
                 <div className="sm:flex items-center justify-between">
                     <div className="flex items-center">
                         {categoryChoices.map((category, index) => (
-                            <button className="rounded-full focus:outline-none focus:ring-2  focus:bg-indigo-50 focus:ring-indigo-800" onClick={() => {handleCategoryChange(category)}}>
+                            <button className="rounded-full focus:outline-none focus:ring-2  focus:bg-indigo-50 focus:ring-indigo-800" key={category} onClick={() => {handleCategoryChange(category)}}>
                                 <div className="py-2 px-8 mx-4 bg-indigo-100 text-indigo-700 hover:bg-indigo-600 hover:text-gray-200 rounded-full" >
                                 {category}
                                 </div>
@@ -101,8 +101,8 @@ export default function ViewPaymentRequests(props) {
                         </thead>
                         <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                             {holdings.length>0 ? holdings.map((item, index) => (
-                                <tr class="text-gray-700 dark:text-gray-400">
-                                    <td class="px-4 py-3">
+                                <tr class="text-gray-700 dark:text-gray-400" key={item.Name}>
+                                    <td class="px-4 py-3" >
                                         <div class="flex items-center text-sm">
                                             <div>
                                                 <p class="font-semibold">{item.Name}</p>

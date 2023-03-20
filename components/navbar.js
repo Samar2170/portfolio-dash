@@ -70,7 +70,7 @@ export default function Navbar() {
 			<div className="flex flex-col items-center w-full mt-3 border-t border-gray-700">
                 {Object.keys(NavOptions).map((key) => {
                     return (
-                        <Link legacyBehavior href={NavOptions[key].path}>
+                        <Link legacyBehavior href={NavOptions[key].path} key={key}>
                         <a className="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-700 hover:text-gray-300" >
                             <span className="ml-2 text-sm font-medium">{NavOptions[key].name}</span>
                         </a>
