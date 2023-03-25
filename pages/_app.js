@@ -5,6 +5,7 @@ import { userService } from "../services/user.service";
 import Navbar  from "../components/navbar2";
 export default App;
 import { Alert } from "../components/Alerts";
+import styles from "../styles/globals.css";
 
 function App({ Component, pageProps }) {
     const router = useRouter();
