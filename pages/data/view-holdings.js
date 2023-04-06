@@ -5,10 +5,10 @@ import Link from "next/link";
 import Loader from "../../components/loader";
 
 const categoryChoices = [
-     "FD",
-     "Listed-Ncd",
-    "Stock",
-    "MF",
+     "fd",
+     "bond",
+    "stock",
+    "mutual_fund",
 ]
 
 
@@ -35,8 +35,8 @@ export default function ViewPaymentRequests(props) {
         const queryString = ctgQuery ;
         const response = dataFetchService.getHoldings(queryString).then( res => {
             console.log(res);
-            if (res.Data!=null) {
-                setHoldings(res.Data);
+            if (res.data!=null) {
+                setHoldings(res.data);
             } else {
                 alert("No holdings found for this category")
               setHoldings([]);  

@@ -13,27 +13,27 @@ export const inputService = {
 }
 
 function createStockTrade(formData) {
-    return fetchWrapper.postForm(`${baseUrl}register-trade/stock`,formData)
+    return fetchWrapper.postForm(`${baseUrl}portfolio/stock-trades/`,formData)
 }
 
 function registerBankAccount(formData) {
-    return fetchWrapper.postForm(`${baseUrl}register-account/bank`,formData)
+    return fetchWrapper.postForm(`${baseUrl}portfolio/bank-accounts/`,formData)
 }
 function registerDematAccount(formData) {
-    return fetchWrapper.postForm(`${baseUrl}register-account/demat`,formData)
+    return fetchWrapper.postForm(`${baseUrl}portfolio/demat-accounts/`,formData)
 }
 
 function registerMfTrade(formData) {
-    return fetchWrapper.postForm(`${baseUrl}register-trade/mf`,formData)
+    return fetchWrapper.postForm(`${baseUrl}portfolio/mutual-fund-trades/`,formData)
 }
 function registerNcdTrade(formData) {
-    return fetchWrapper.postForm(`${baseUrl}register-trade/listed-ncd`,formData)
+    return fetchWrapper.postForm(`${baseUrl}portfolio/bond-trades/`,formData)
 }
 function registerUnlistedNcdTrade(formData) {
-    return fetchWrapper.postForm(`${baseUrl}register-trade/unlisted-ncd`,formData)
+    return fetchWrapper.postForm(`${baseUrl}portfolio/bond-trades/`,formData)
 }
 function registerFd(formData) {
-    return fetchWrapper.postForm(`${baseUrl}register-fd`,formData)
+    return fetchWrapper.postForm(`${baseUrl}portfolio/fd-holdings/`,formData)
 }
 function createBulkUpload(formData, security) {
     return fetchWrapper.postForm(`${baseUrl}bulk-upload/${security}`,formData)

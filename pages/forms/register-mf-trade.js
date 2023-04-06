@@ -23,16 +23,15 @@ export default function CreateStockTrade() {
     useEffect(() => {
         const getDematAccounts = async () => {
             const resp = await dataFetchService.getDematAccounts();
-            setDematAcs(resp.Data.demat_accounts);
+            setDematAcs(resp);
         }
         const getMFs = async () => {
             if (mfQuery=="") {
                 setMFs([]);
             } else {
                 const resp = await dataFetchService.searchMutualFunds(mfQuery);
-                console.log(resp.rows);
-                setMFs(resp.rows);
-    
+                console.log(resp);
+                setMFs(resp.results);
             }
         }
         getDematAccounts();
@@ -92,14 +91,13 @@ export default function CreateStockTrade() {
                             className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">                                    <option value="">Select Vendor</option>
                                 {MFs.map((symbol) => {
                                     return (
-                                        <option key={symbol.ID} value={symbol.ID}>{symbol.SchemeName}</option>
+                                        <option key={symbol.id} value={symbol.id}>{symbol.scheme_nav_name}</option>
                                     )
                                 })}
                             </select>
                             {submitted && !symbol &&
                                 <div className="text-red-500">Symbol is required</div>
                             }
-
                     </div>
                     <div className="col-span-3 sm:col-span-3">
                         <label htmlFor="demat" className="block text-sm font-medium text-gray-700">
@@ -110,7 +108,7 @@ export default function CreateStockTrade() {
                                 <option value="">Select Demat Account</option>
                                 {dematAcs.map((bankAccount) => {
                                     return (
-                                        <option key={bankAccount.Code} value={bankAccount.Code}>{bankAccount.Code} {bankAccount.Broker}</option>
+                                        <option key={bankAccount.account_code} value={bankAccount.account_code}>{bankAccount.account_code} {bankAccount.broker}</option>
                                     )
                                 })}
                             </select>

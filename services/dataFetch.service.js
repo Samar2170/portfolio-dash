@@ -5,6 +5,7 @@ const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 export const dataFetchService = {
     getStockSymbols,
     getDematAccounts,
+    getBankAccounts,
     searchMutualFunds,
     getNCDSymbols,
     getUNCDSymbols,
@@ -14,20 +15,23 @@ export const dataFetchService = {
 }
 
 function getStockSymbols() {
-    return fetchWrapper.get(`${baseUrl}securities/stocks-list`);
+    return fetchWrapper.get(`${baseUrl}securities/stocks-list/`);
 }
 function getDematAccounts() {
-    return fetchWrapper.get(`${baseUrl}view-accounts`);
+    return fetchWrapper.get(`${baseUrl}portfolio/demat-accounts/`);
+}
+function getBankAccounts() {
+    return fetchWrapper.get(`${baseUrl}portfolio/bank-accounts/`);
 }
 function searchMutualFunds(symbol) {
-    return fetchWrapper.get(`${baseUrl}securities/mutual-funds/search?symbol=${symbol}`)
+    return fetchWrapper.get(`${baseUrl}securities/mutual-funds/?search=${symbol}`)
 }
 
 function getNCDSymbols() {
-    return fetchWrapper.get(`${baseUrl}securities/ncd-list`)
+    return fetchWrapper.get(`${baseUrl}securities/bonds-list/`)
 }
 function getUNCDSymbols() {
-    return fetchWrapper.get(`${baseUrl}securities/unlisted-ncd-list`)
+    return fetchWrapper.get(`${baseUrl}securities/bonds-list/`)
 }
 function getTemplateFile(security) {
     return fetchWrapper.get(`${baseUrl}bulk-upload-template/${security}`)

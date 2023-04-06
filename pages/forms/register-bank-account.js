@@ -22,7 +22,7 @@ export default function RegisterBankAccount() {
         setLoading(true);
         setSubmitted(true);
         const form = new FormData();
-        form.append("account_number",bankAccount.account_no);
+        form.append("account_no",bankAccount.account_no);
         form.append("bank",bankAccount.bank);
         const response = await inputService.registerBankAccount(form).then((res) => {
             setLoading(false);

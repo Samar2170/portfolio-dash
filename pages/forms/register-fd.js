@@ -37,8 +37,8 @@ export default function CreateStockTrade() {
 
     useEffect(() => {
         const getBankAccounts = async () => {
-            const resp = await dataFetchService.getDematAccounts();
-            setBankAcs(resp.Data.bank_accounts);
+            const resp = await dataFetchService.getBankAccounts();
+            setBankAcs(resp);
         }
         getBankAccounts();
     },[])
@@ -56,17 +56,16 @@ export default function CreateStockTrade() {
         setLoading(true);
         setSubmitted(true);
         const form = new FormData();
-        form.append("bank",query.bank);
         form.append("amount",query.amount);
         form.append("maturity_amount",query.maturity_amount);
-        form.append("ip_frequency",query.ip_frequency)
+        form.append("ip_freq",query.ip_frequency)
         form.append("ip_rate",query.ip_rate);
         form.append("start_date",query.start_date);
         form.append("ip_date",query.ip_date);
         form.append("maturity_date",query.maturity_date);
         form.append("account_number",query.account_number);
 
-        const response = await inputService.createStockTrade(form).then((res) => {
+        const response = await inputService.registerFd(form).then((res) => {
             setLoading(false);
             router.push('/')
         }).catch((err) => {
@@ -82,19 +81,19 @@ export default function CreateStockTrade() {
                 <div className="grid grid-cols-6 gap-6">
                     
                     <div className="col-span-3 sm:col-span-3">
-                        <label htmlFor="demat" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="account_number" className="block text-sm font-medium text-gray-700">
                             Bank Account
                             </label>
-                            <select id="demat" name="demat" value={query.demat} onChange={handleChange}
+                            <select id="account_number" name="account_number" value={query.account_number} onChange={handleChange}
                             className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                 <option value="">Select Bank Account</option>
                                 {bankAcs.map((bankAccount) => {
                                     return (
-                                        <option key={bankAccount.AccountNo} value={bankAccount.AccountNo}>{bankAccount.AccountNo} {bankAccount.Bank}</option>
+                                        <option key={bankAccount.account_no} value={bankAccount.account_no}>{bankAccount.account_no} {bankAccount.bank}</option>
                                     )
                                 })}
                             </select>
-                            {submitted && !demat &&
+                            {submitted && !account_number &&
                                 <div className="text-red-500">Bank Account is required</div>
                             }
                     </div>
@@ -104,7 +103,7 @@ export default function CreateStockTrade() {
                             </label>
                             <input type="number" name="amount" id="amount" value={query.amount} onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
                             {submitted && !amount &&
-                                <div className="text-red-500">Quantity is required</div>
+                                <div className="text-red-500">Amount is required</div>
                             }
                     </div>
                     <div className="col-span-3 sm:col-span-3">
@@ -139,7 +138,7 @@ export default function CreateStockTrade() {
                         <label htmlFor="ip_rate" className="block text-sm font-medium text-gray-700">
                         IP Rate 
                             </label>
-                            <input type="number" name="amount" id="amount" value={query.amount} onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />                 
+                            <input type="number" name="ip_rate" id="ip_rate" value={query.ip_rate} onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />                 
                     </div>
                     <div className="col-span-3 sm:col-span-3">
                         <label htmlFor="ip_frequency" className="block text-sm font-medium text-gray-700">

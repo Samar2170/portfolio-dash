@@ -22,11 +22,11 @@ export default function CreateStockTrade() {
     useEffect(() => {
         const getDematAccounts = async () => {
             const resp = await dataFetchService.getDematAccounts();
-            setDematAcs(resp.Data.demat_accounts);
+            setDematAcs(resp);
         }
         const getSymbols = async () => {
             const resp = await dataFetchService.getStockSymbols();
-            setSymbols(resp.Data.data);
+            setSymbols(resp.data);
         }
         getDematAccounts();
         getSymbols();
@@ -70,7 +70,8 @@ export default function CreateStockTrade() {
                             Symbol
                             </label>
                             <select id="symbol" name="symbol" value={query.symbol} onChange={handleChange}
-                            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">                                    <option value="">Select Vendor</option>
+                            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">                                    
+                            <option value="">Select Symbol</option>
                                 {symbols.map((symbol) => {
                                     return (
                                         <option key={symbol} value={symbol}>{symbol}</option>
@@ -91,7 +92,7 @@ export default function CreateStockTrade() {
                                 <option value="">Select Demat Account</option>
                                 {dematAcs.map((bankAccount) => {
                                     return (
-                                        <option key={bankAccount.Code} value={bankAccount.Code}>{bankAccount.Code} {bankAccount.Broker}</option>
+                                        <option key={bankAccount.account_code} value={bankAccount.account_code}>{bankAccount.account_code} {bankAccount.broker}</option>
                                     )
                                 })}
                             </select>
@@ -130,7 +131,8 @@ export default function CreateStockTrade() {
                             Trade Type
                             </label>
                             <select id="tradeType" name="tradeType" value={query.tradeType} onChange={handleChange}
-                            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">                                    <option value="">Select Vendor</option>
+                            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">                                    
+                            <option value="">Buy or Sell</option>
                                 <option key="BUY" value="BUY">BUY</option>
                                 <option key="SELL" value="SELL">SELL</option>
                             </select>
