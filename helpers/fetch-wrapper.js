@@ -28,29 +28,36 @@ function get(url) {
 }
 
 function post(url, body) {
-
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', ...authHeader(url) },
-        body: JSON.stringify(body)
-    };
-    return fetch(url, requestOptions).then(handleResponse);
+    if (url.includes('login')) {
+        return fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body),
+        }).then(handleResponse);
+    } else {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', ...authHeader(url) },
+            body: JSON.stringify(body)
+        };
+        return fetch(url, requestOptions).then(handleResponse);
+    }    
 
 }
 
 function postForm(url , formData) {
-    const requestOptions = {
-        method: 'POST',
-        headers: { ...authHeader(url) },
-        body: formData
-    };
-    return fetch(url, requestOptions).then(handleResponse);
+
+        const requestOptions = {
+            method: 'POST',
+            headers: { ...authHeader(url) },
+            body: formData
+        };
+        return fetch(url, requestOptions).then(handleResponse); 
 }
 
 
 function authHeader(url) {
-    const user = userService.userValue;
-    console.log("authheader",user)
+    const user = userService.userValue['access_token'];
     let isLoggedIn = false;
     if (user) {
         isLoggedIn = true;
@@ -67,6 +74,7 @@ function handleResponse(response) {
     return response.text().then(text => {
         const data = text && JSON.parse(text);
         if (!response.ok) {
+            console.log('handleResponse->' ,userService.userValue)
             if ([401,403].includes(response.status) && userService.userValue) {
                 alert('Session expired. Please login again');
                 localStorage.clear("user");

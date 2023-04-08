@@ -17,6 +17,7 @@ export const userService = {
 function login(username, password) {
     console.log(baseUrl, 'Login');
     return fetchWrapper.post(`${baseUrl}portfolio/login/`, { username, password })
+        
         .then(user => {
             console.log(user);
             localStorage.setItem('user', JSON.stringify(user['access_token']));
